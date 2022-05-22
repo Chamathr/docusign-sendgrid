@@ -4,8 +4,10 @@ const path = require('path');
 const docsDirectory = path.resolve(__dirname, './demo_docs');
 const docsFile = 'PCC Form.pdf';
 const templatesFunctions = require('./templates')
+const CONSTANTS = require('../../services/docusign/config')
 
 const pdfDocument = fs.readFileSync(path.resolve(docsDirectory, docsFile))
+const webhookBaseUrl = CONSTANTS.DOCUSIGN_WEBHOOK_BASEURL
 
 const sendEnvelope = async (args, accessToken) => {
 
@@ -82,7 +84,7 @@ const makeEnvelopeWithDocusignTemplate = async (args, accessToken) => {
         /*set webhook configurations*/
         const eventNotification = {
           // url: "https://webhook.site/ee03eaec-eaa4-4271-a314-3507fab639f5",
-          url: "https://fa00-112-134-221-223.ngrok.io/docs/status",
+          url: `${webhookBaseUrl}/docs/status`,
 
           requireAcknowledgment: "true",
           loggingEnabled: "true",
@@ -90,7 +92,7 @@ const makeEnvelopeWithDocusignTemplate = async (args, accessToken) => {
             // {envelopeEventStatusCode: "Sent"},
             // {envelopeEventStatusCode: "Delivered"},
             // {envelopeEventStatusCode: "Declined"},
-            {envelopeEventStatusCode: "Voided"},
+            { envelopeEventStatusCode: "Voided" },
             { envelopeEventStatusCode: "Completed" }
           ],
           // recipientEvents: [
@@ -203,7 +205,7 @@ const makeEnvelopeWithStaticTemplate = (args) => {
   envelopeDefinition.notification = notification;
 
   const eventNotification = {
-    url: "https://webhook.site/ee03eaec-eaa4-4271-a314-3507fab639f5",
+    url: `${webhookBaseUrl}/docs/status`,
     // url: "https://19a5-112-134-221-133.ngrok.io/docstatus", 
 
     requireAcknowledgment: "true",
