@@ -30,7 +30,7 @@ const sendDocument = async (req, res, next) => {
       message: 'success',
       results: results
     }
-    return res.send(responseBody)
+    res.send(responseBody)
 
   } catch (error) {
     const errorBody = {
