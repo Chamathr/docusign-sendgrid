@@ -1,0 +1,12 @@
+require('dotenv').config()
+
+/*Sendgrid constant variables*/
+
+const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
+
+const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
+const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
+const TWILIO_PHONE_NUMBER = process.env.TWILIO_PHONE_NUMBER;
+const TWILIO_MESSAGE_SERVICE_ID = process.env.TWILIO_MESSAGE_SERVICE_ID;
+
+module.exports = {SENDGRID_API_KEY, TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER, TWILIO_MESSAGE_SERVICE_ID}

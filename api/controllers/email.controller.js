@@ -1,4 +1,4 @@
-const CONSTANTS = require('../../env/sendgrid/apiKey')
+const CONSTANTS = require('../../services/sendgrid/config');
 const emailClient = require('@sendgrid/mail');
 const client = require('@sendgrid/client');
 const fs = require("fs");

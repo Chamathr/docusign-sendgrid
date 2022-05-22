@@ -12,6 +12,7 @@
     "debug": "~2.6.9",
     "docusign": "^8.0.4",
     "docusign-esign": "^5.15.0",
+    "dotenv": "^16.0.1",
     "express": "~4.16.1",
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",

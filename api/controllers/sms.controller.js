@@ -1,11 +1,10 @@
-const CONSTANTS = require('../../env/sendgrid/apiKey')
+const CONSTANTS = require('../../services/sendgrid/config')
+
 const twilioAccountSid = CONSTANTS.TWILIO_ACCOUNT_SID;
 const twilioAuthToken = CONSTANTS.TWILIO_AUTH_TOKEN;
 const twilioNumber = CONSTANTS.TWILIO_PHONE_NUMBER;
 const twilioServiceId = CONSTANTS.TWILIO_MESSAGE_SERVICE_ID;
 const smsClient = require('twilio')(twilioAccountSid, twilioAuthToken);
-
-const responses = require('../../constants/responses')
 
 // const numbersList = ['+94726660070','+94702654310']
 // const numbersList = ['+94726660070']

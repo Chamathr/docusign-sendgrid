@@ -1,6 +1,6 @@
 const authFunctions = require('../../services/docusign/authentication')
 const envelopFunctions = require('../../services/docusign/envelop')
-const CONSTANTS = require('../../services/docusign/constant')
+const CONSTANTS = require('../../services/docusign/config')
 
 /*docusign account constant variable*/
 const docusignDetails = {
@@ -14,7 +14,7 @@ const docusignDetails = {
 
   basePath: CONSTANTS.DOCUSIGN_BASE_PATH,
   accountId: CONSTANTS.DOCUSIGN_ACCOUNT_ID,
-  envelopStatus: CONSTANTS.DOCUSIGN_ENVELOP_STATUS
+  envelopStatus: 'sent'
 }
 
 /*send document*/
