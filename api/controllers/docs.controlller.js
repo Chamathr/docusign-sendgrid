@@ -1,7 +1,6 @@
 const authFunctions = require('../../services/docusign/authentication')
 const envelopFunctions = require('../../services/docusign/envelop')
 const CONSTANTS = require('../../services/docusign/constant')
-const responses = require('../../constants/responses')
 
 /*docusign account constant variable*/
 const docusignDetails = {
@@ -26,12 +25,20 @@ const sendDocument = async (req, res, next) => {
   try {
     const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
     const results = await envelopFunctions.sendEnvelope(docusignDetails, accessToken)
-    responses.responseBody.results = results
-    return res.send(responses.responseBody)
+    const responseBody = {
+      status: 200,
+      message: 'success',
+      results: results
+    }
+    return res.send(responseBody)
 
   } catch (error) {
-    responses.errorBody.error = error
-    res.status(500).send(responses.errorBody)
+    const errorBody = {
+      status: 500,
+      message: 'fail',
+      results: error
+    }
+    res.status(500).send(errorBody)
   }
 }
 
@@ -42,12 +49,20 @@ const getDocument = async (req, res, next) => {
   try {
     const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
     const results = await envelopFunctions.getEnvelope(docusignDetails, accessToken)
-    responses.responseBody.results = results
-    res.send(responses.responseBody)
+    const responseBody = {
+      status: 200,
+      message: 'success',
+      results: results
+    }
+    res.send(responseBody)
   }
   catch (error) {
-    responses.errorBody.error = error
-    res.status(500).send(responses.errorBody)
+    const errorBody = {
+      status: 500,
+      message: 'fail',
+      results: error
+    }
+    res.status(500).send(errorBody)
   }
 }
 
@@ -59,23 +74,35 @@ const getDocumentStatus = async (req, res, next) => {
     res.status(200).end()
   }
   catch (error) {
-    responses.errorBody.error = error
-    res.status(500).send(responses.errorBody)
+    const errorBody = {
+      status: 500,
+      message: 'fail',
+      results: error
+    }
+    res.status(500).send(errorBody)
   }
 }
 
 const downloadDocument = async (req, res, next) => {
 
   docusignDetails.envelopeId = '38496f5f-4ddd-4d67-bd21-3856910e4902'
-  try{
+  try {
     const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
     const results = await envelopFunctions.downloadEnvelop(docusignDetails, accessToken)
-    responses.responseBody.results = results
-    res.send(responses.responseBody)
+    const responseBody = {
+      status: 200,
+      message: 'success',
+      results: results
+    }
+    res.send(responseBody)
   }
-  catch(error){
-    responses.errorBody.error = error
-    res.status(500).send(responses.errorBody)
+  catch (error) {
+    const errorBody = {
+      status: 500,
+      message: 'fail',
+      results: error
+    }
+    res.status(500).send(errorBody)
   }
 }
 

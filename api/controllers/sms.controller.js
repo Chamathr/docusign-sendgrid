@@ -13,23 +13,32 @@ const numbersList = ['+94702654310']
 
 /*send sms via sendgrid-twilio*/
 const sendSms = async (req, res, next) => {
-    try{
+    try {
         numbersList.map(async number => {
             await smsClient.messages
-            .create({
-                body: 'This is a test message...',
-                from: twilioNumber,
-                to: number
-            })
+                .create({
+                    body: 'This is a test message...',
+                    from: twilioNumber,
+                    to: number
+                })
         })
-    
-        responses.responseBody.results = ''
-        res.send(responses.responseBody)
+
+        const results = ''
+        const responseBody = {
+            status: 200,
+            message: 'success',
+            results: results
+        }
+        res.send(responseBody)
     }
-    catch(error){
-        responses.errorBody.error = error
-        res.status(500).send(responses.errorBody)
+    catch (error) {
+        const errorBody = {
+            status: 500,
+            message: 'fail',
+            results: error
+        }
+        res.status(500).send(errorBody)
     }
 }
 
-module.exports = {sendSms}
+module.exports = { sendSms }
