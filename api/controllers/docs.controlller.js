@@ -45,7 +45,7 @@ const sendDocument = async (req, res, next) => {
 /*get document status using api passing envelop id*/
 const getDocument = async (req, res, next) => {
   docusignDetails.signerEmail = await req.params.email
-  docusignDetails.envelopeId = '38496f5f-4ddd-4d67-bd21-3856910e4902'
+  docusignDetails.envelopeId = '4a6f629a-95bf-48ba-87d1-52e9fd7cf5bf'
   try {
     const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
     const results = await envelopFunctions.getEnvelope(docusignDetails, accessToken)
@@ -83,6 +83,30 @@ const getDocumentStatus = async (req, res, next) => {
   }
 }
 
+/*fetch recipient details after webhook*/
+const getRecipientStatus = async (req, res, next) => {
+  docusignDetails.signerEmail = await req.params.email
+  docusignDetails.envelopeId = 'b934074b-e3eb-4d1c-87bd-54210237dcee'
+  try {
+    const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
+    const results = await envelopFunctions.getRecipientData(docusignDetails, accessToken)
+    const responseBody = {
+      status: 200,
+      message: 'success',
+      results: results
+    }
+    res.send(responseBody)
+  }
+  catch (error) {
+    const errorBody = {
+      status: 500,
+      message: 'fail',
+      results: error
+    }
+    res.status(500).send(errorBody)
+  }
+}
+
 const downloadDocument = async (req, res, next) => {
 
   docusignDetails.envelopeId = '38496f5f-4ddd-4d67-bd21-3856910e4902'
@@ -106,4 +130,4 @@ const downloadDocument = async (req, res, next) => {
   }
 }
 
-module.exports = { sendDocument, getDocument, getDocumentStatus, downloadDocument }
+module.exports = { sendDocument, getDocument, getDocumentStatus, downloadDocument, getRecipientStatus }

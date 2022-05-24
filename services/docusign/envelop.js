@@ -73,9 +73,9 @@ const makeEnvelopeWithDocusignTemplate = async (args, accessToken) => {
             reminderFrequency: 1
           },
           expirations: {
-            expirationEnabled: true,
-            expirationAfter: 2,
-            expirationWarn: 1
+            expireEnabled: true,
+            expireAfter: 2,
+            expirenWarn: 1
           }
         }
 
@@ -95,19 +95,19 @@ const makeEnvelopeWithDocusignTemplate = async (args, accessToken) => {
             { envelopeEventStatusCode: "Voided" },
             { envelopeEventStatusCode: "Completed" }
           ],
-          // recipientEvents: [
-          //     {recipientEventStatusCode: "Sent"},
-          //     {recipientEventStatusCode: "Delivered"},
-          //     {recipientEventStatusCode: "Completed"},
-          //     {recipientEventStatusCode: "Declined"},
-          //     {recipientEventStatusCode: "AuthenticationFailed"},
-          //     {recipientEventStatusCode: "AutoResponded"}
-          // ],
+          recipientEvents: [
+            { recipientEventStatusCode: "Sent" },
+            // {recipientEventStatusCode: "Delivered"},
+            { recipientEventStatusCode: "Completed" },
+            // {recipientEventStatusCode: "Declined"},
+            // {recipientEventStatusCode: "AuthenticationFailed"},
+            { recipientEventStatusCode: "AutoResponded" }
+          ],
           eventData: {
             version: "restv2.1",
             format: "json",
             // includeData: ["custom_fields", "extensions", "folders",
-            //     "recipients", "powerform", "tabs", "payment_tabs","documents"]
+            //   "recipients", "powerform", "tabs", "payment_tabs", "documents"]
           }
         }
 
@@ -148,6 +148,27 @@ const getEnvelope = async (args, accessToken) => {
       args.envelopeId,
       null
     );
+  }
+  catch (error) {
+    return error
+  }
+
+  return results;
+};
+
+/*get recipient details with api*/
+const getRecipientData = async (args, accessToken) => {
+
+  let dsApiClient = new docusign.ApiClient();
+  dsApiClient.setBasePath(args.basePath);
+  dsApiClient.addDefaultHeader('Authorization', 'Bearer ' + accessToken);
+  let envelopesApi = new docusign.EnvelopesApi(dsApiClient), results = null;
+
+  try {
+    results = await envelopesApi.listRecipients(
+      args.accountId,
+      args.envelopeId,
+      null);
   }
   catch (error) {
     return error
@@ -333,4 +354,4 @@ const document1 = (details) => {
 }
 
 
-module.exports = { sendEnvelope, getEnvelope, downloadEnvelop }
+module.exports = { sendEnvelope, getEnvelope, downloadEnvelop, getRecipientData }
