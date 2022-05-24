@@ -96,7 +96,7 @@ const makeEnvelopeWithDocusignTemplate = async (args, accessToken) => {
             { envelopeEventStatusCode: "Completed" }
           ],
           recipientEvents: [
-            { recipientEventStatusCode: "Sent" },
+            // { recipientEventStatusCode: "Sent" },
             // {recipientEventStatusCode: "Delivered"},
             { recipientEventStatusCode: "Completed" },
             // {recipientEventStatusCode: "Declined"},

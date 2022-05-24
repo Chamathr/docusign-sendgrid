@@ -68,10 +68,20 @@ const getDocument = async (req, res, next) => {
 
 /*fetch document details after complete via webhook*/
 const getDocumentStatus = async (req, res, next) => {
+
+  const data = await req.body
+  docusignDetails.envelopeId = data?.envelopeId
+
   try {
-    const data = await req.body
-    console.log(data);
-    res.status(200).end()
+    const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
+    const results = await envelopFunctions.getRecipientData(docusignDetails, accessToken)
+    const responseBody = {
+      status: 200,
+      message: 'success',
+      results: results
+    }
+    console.log(results)
+    // res.send(responseBody)
   }
   catch (error) {
     const errorBody = {
@@ -83,29 +93,6 @@ const getDocumentStatus = async (req, res, next) => {
   }
 }
 
-/*fetch recipient details after webhook*/
-const getRecipientStatus = async (req, res, next) => {
-  docusignDetails.signerEmail = await req.params.email
-  docusignDetails.envelopeId = 'b934074b-e3eb-4d1c-87bd-54210237dcee'
-  try {
-    const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
-    const results = await envelopFunctions.getRecipientData(docusignDetails, accessToken)
-    const responseBody = {
-      status: 200,
-      message: 'success',
-      results: results
-    }
-    res.send(responseBody)
-  }
-  catch (error) {
-    const errorBody = {
-      status: 500,
-      message: 'fail',
-      results: error
-    }
-    res.status(500).send(errorBody)
-  }
-}
 
 const downloadDocument = async (req, res, next) => {
 
@@ -130,4 +117,4 @@ const downloadDocument = async (req, res, next) => {
   }
 }
 
-module.exports = { sendDocument, getDocument, getDocumentStatus, downloadDocument, getRecipientStatus }
+module.exports = { sendDocument, getDocument, getDocumentStatus, downloadDocument }
