@@ -96,7 +96,7 @@ const getDocumentStatus = async (req, res, next) => {
 
 const downloadDocument = async (req, res, next) => {
 
-  docusignDetails.envelopeId = '38496f5f-4ddd-4d67-bd21-3856910e4902'
+  docusignDetails.envelopeId = '10921fee-7a9b-4e7d-86bc-8e5224180e39'
   try {
     const accessToken = await authFunctions.requestJWTUserToken(docusignDetails);
     const results = await envelopFunctions.downloadEnvelop(docusignDetails, accessToken)

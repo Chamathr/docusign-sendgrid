@@ -186,8 +186,6 @@ const downloadEnvelop = async (args, accessToken) => {
     let envelopesApi = new docusign.EnvelopesApi(dsApiClient),
       results = null;
 
-    args.envelopeId = '2df4c0fb-03e4-4870-a2c2-2c61e28d3984'
-
     args.documentId = 'combined'
 
     results = await envelopesApi.getDocument(args.accountId, args.envelopeId, args.documentId, {});
